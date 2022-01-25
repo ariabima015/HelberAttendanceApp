@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19375" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/drawable/dropshadow.xml" value="0.19375" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.19375" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/drawable/ic_masuk.xml" value="0.19375" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/drawable/ic_pulang.xml" value="0.19375" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/drawable/ic_side_nav.xml" value="0.290625" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/drawable/rounded_button.xml" value="0.1" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/layout/activity_attendance.xml" value="0.18253968253968253" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/layout/activity_go_home.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/layout/activity_login.xml" value="0.1829861111111111" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/layout/activity_pulang.xml" value="0.1829861111111111" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/layout/fragment_upload.xml" value="0.264" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/layout/header.xml" value="0.1829861111111111" />
+        <entry key="..\:/Users/Bima Aria/AndroidStudioProjects/Helber/AttendanceApp/app/src/main/res/menu/main_menu.xml" value="0.1829861111111111" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.16799999999999998" />
+      </ProjectState>
+    </option>
+  </component>
+</project>
