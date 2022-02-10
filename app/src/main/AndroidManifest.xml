@@ -19,6 +19,7 @@
         android:required="false"/>
 
     <application
+        android:name=".AttendanceApp"
         android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

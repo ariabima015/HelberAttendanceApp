@@ -41,11 +41,19 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.31"
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    implementation "androidx.activity:activity-ktx:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.0"
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
 
     implementation 'com.github.DJSeokHo:EasyPermissionManager:1.0.9'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.florent37:runtime-permission-kotlin:1.1.2'
+
+    implementation "com.anggrayudi:storage:1.1.0"
 
 }
