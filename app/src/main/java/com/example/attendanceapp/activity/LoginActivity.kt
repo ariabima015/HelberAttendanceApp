@@ -2,14 +2,21 @@ package com.example.attendanceapp.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.example.attendanceapp.R
+import com.example.attendanceapp.model.BasicResponse
+import com.example.attendanceapp.model.LoginResponse
 import com.example.attendanceapp.network.RetrofitInstance
 import com.google.android.material.textfield.TextInputEditText
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import org.json.JSONObject
 
 
 class LoginActivity : AppCompatActivity() {
@@ -40,14 +47,17 @@ class LoginActivity : AppCompatActivity() {
                     getSharedPreferences(RetrofitInstance().PREF_KEY, Context.MODE_PRIVATE).edit()
                 pref.putString("token", response.body()?.data?.get(0)?.token)
                 pref.apply()
-                Log.e("error", response.body().toString())
                 if (response.isSuccessful && response.body() != null) {
                     val intent = Intent(applicationContext, AttendanceActivity::class.java)
                     startActivity(intent)
                 } else {
-
-                    Log.e("error", response.errorBody().toString())
-                    throw Exception(response.body()?.data?.get(0)?.message.toString())
+                    var jsonObject = JSONObject(response.errorBody()?.string());
+                    if(!jsonObject.getBoolean("success")) {
+                        var jsonArray = jsonObject.getJSONArray("data")
+                        throw Exception(JSONObject(jsonArray.get(0).toString()).getString("message"))
+                    }
+                    else
+                        throw Exception("Error Serialize Json")
                 }
             } catch (e: Exception) {
                 val exception = e.message.toString()
@@ -55,4 +65,6 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }
