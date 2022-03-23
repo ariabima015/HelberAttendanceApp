@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -180,7 +181,6 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     fun presensiMasukOnClick(view: android.view.View) {
 
-
         val now = Calendar.getInstance().timeInMillis
         val time: RequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(),
             (now/1000).toString())
@@ -207,7 +207,13 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                         Toast.makeText(applicationContext, "Presensi Tercatat",
                             Toast.LENGTH_SHORT).show()
                     } else {
-                        throw Exception(response.body()?.data?.get(0)?.message)
+                        var jsonObject = JSONObject(response.errorBody()?.string())
+                        if(!jsonObject.getBoolean("success")) {
+                            var jsonArray = jsonObject.getJSONArray("data")
+                            throw Exception(JSONObject(jsonArray.get(0).toString()).getString("message"))
+                        }
+                        else
+                            throw Exception("Error Serialize Json")
                     }
                 } catch (e: Exception) {
                     val exception = e.message.toString()
@@ -215,7 +221,6 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 }
             }
         }
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -228,8 +233,7 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 startActivity(intent)
             }
             R.id.nav_logout -> {
-                val intent = Intent(this@AttendanceActivity, LoginActivity::class.java)
-                startActivity(intent)
+                finish()
             }
         }
 

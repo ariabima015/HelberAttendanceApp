@@ -34,6 +34,7 @@ import com.swein.easypermissionmanager.EasyPermissionManager
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -200,7 +201,13 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                         Toast.makeText(applicationContext, "Presensi Tercatat",
                             Toast.LENGTH_SHORT).show()
                     } else {
-                        throw Exception(response.body()?.data?.get(0)?.message)
+                        var jsonObject = JSONObject(response.errorBody()?.string())
+                        if(!jsonObject.getBoolean("success")) {
+                            var jsonArray = jsonObject.getJSONArray("data")
+                            throw Exception(JSONObject(jsonArray.get(0).toString()).getString("message"))
+                        }
+                        else
+                            throw Exception("Error Serialize Json")
                     }
                 } catch (e: Exception) {
                     val exception = e.message.toString()
@@ -220,6 +227,7 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             }
             R.id.nav_logout -> {
                 val intent = Intent(this@GoHomeActivity, LoginActivity::class.java)
+                finish()
                 startActivity(intent)
             }
         }
