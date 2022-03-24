@@ -7,6 +7,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.attendanceapp.R
@@ -21,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var etEmail : TextInputEditText
     private lateinit var etPassword : TextInputEditText
+    private lateinit var pbLogin : ProgressBar
     private var WRITE_EXTERNAL_STORAGE_PERMISSION_CODE: Int = 1
     private var READ_EXTERNAL_STORAGE_PERMISSION_CODE: Int = 2
     private var CAMERA_PERMISSION_CODE: Int = 3
@@ -31,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
 
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
+        pbLogin = findViewById(R.id.pbLogin)
+
 
         checkPermission()
 
@@ -40,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
         val api = RetrofitInstance().createApi()
 
         lifecycleScope.launchWhenCreated {
+            pbLogin.visibility = View.VISIBLE
             try {
                 val body = hashMapOf(
                     "email" to etEmail.text.toString(),
@@ -65,6 +71,7 @@ class LoginActivity : AppCompatActivity() {
                 val exception = e.message.toString()
                 Toast.makeText(this@LoginActivity, exception, Toast.LENGTH_SHORT).show()
             }
+            pbLogin.visibility = View.GONE
         }
     }
 
@@ -128,6 +135,7 @@ class LoginActivity : AppCompatActivity() {
         qrScan.setOrientationLocked(false)
         qrScan.setBeepEnabled(false)
         qrScan.setBarcodeImageEnabled(true)
+        qrScan.setTorchEnabled(false)
         //initiating the qr code scan
         qrScan.initiateScan()
     }

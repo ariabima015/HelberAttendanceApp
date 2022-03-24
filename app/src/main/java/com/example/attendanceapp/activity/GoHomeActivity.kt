@@ -8,10 +8,8 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
@@ -55,6 +53,7 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     private lateinit var takePhoto : ActivityResultLauncher<Void?>
     private lateinit var tvTanggal : TextView
     private lateinit var tvNama : TextView
+    private lateinit var pbLoading : ProgressBar
     private val currentTime: String =
         SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
     private val imageView: ImageView by lazy {
@@ -70,6 +69,8 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         tvTanggal = findViewById(R.id.tvTanggal)
 
         tvTanggal.text = currentTime
+
+        pbLoading = findViewById(R.id.pbLoading)
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
@@ -97,6 +98,7 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         setupStorageHelper()
 
         lifecycleScope.launchWhenCreated{
+            pbLoading.visibility = View.VISIBLE
             try {
                 val response = api.getUser()
 
@@ -112,6 +114,7 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 val exception = e.message.toString()
                 Toast.makeText(this@GoHomeActivity, exception, Toast.LENGTH_SHORT).show()
             }
+            pbLoading.visibility = View.GONE
         }
 
         Glide.with(this)
@@ -184,6 +187,7 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
         val jobdesk :RequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(),
             etJobdesk.text.toString())
 
+
         if (tempFile == null || etJobdesk.text.toString().isEmpty()){
             Toast.makeText(this, "Mohon isi report jobdesk dan foto Dokumentasi",
                 Toast.LENGTH_LONG).show()
@@ -195,6 +199,7 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 MultipartBody.Part.createFormData("photo", tempFile?.name, requestFile)
 
             lifecycleScope.launchWhenCreated {
+                pbLoading.visibility = View.VISIBLE
                 try {
                     val response = api.postAttendance(time, status, jobdesk, img1)
                     if (response.isSuccessful && response.body() != null) {
@@ -213,6 +218,7 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                     val exception = e.message.toString()
                     Toast.makeText(this@GoHomeActivity, exception, Toast.LENGTH_SHORT).show()
                 }
+                pbLoading.visibility = View.GONE
             }
         }
 

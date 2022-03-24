@@ -9,10 +9,8 @@ import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.launch
@@ -59,6 +57,7 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     private val storageHelper = SimpleStorageHelper(this)
     private var tempFile : DocumentFile? = null
     private lateinit var takePhoto : ActivityResultLauncher<Void?>
+    private lateinit var pbLoading : ProgressBar
     private val currentTime: String =
         SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
     private val imageView: ImageView by lazy {
@@ -73,6 +72,7 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
+        pbLoading = findViewById(R.id.pbLoading)
         toolbar = findViewById(R.id.toolbar)
         tvNama = findViewById(R.id.tvNama)
         tvTanggal = findViewById(R.id.tvTanggal)
@@ -83,6 +83,7 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         lifecycleScope.launchWhenCreated{
             try {
+                pbLoading.visibility = View.VISIBLE
                 val response = api.getUser()
 
                 if (response.isSuccessful) {
@@ -97,6 +98,7 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 val exception = e.message.toString()
                 Toast.makeText(this@AttendanceActivity, exception, Toast.LENGTH_SHORT).show()
             }
+            pbLoading.visibility = View.GONE
         }
 
         tvTanggal.text = currentTime
@@ -176,7 +178,6 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
-
     }
 
     fun presensiMasukOnClick(view: android.view.View) {
@@ -189,6 +190,8 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val jobdesk :RequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(),
             etJobdesk.text.toString())
 
+
+
         if (tempFile == null || etJobdesk.text.toString().isEmpty()){
            Toast.makeText(this, "Mohon isi jobdesk dan bukti foto kehadiran",
                Toast.LENGTH_LONG).show()
@@ -200,8 +203,8 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                 MultipartBody.Part.createFormData("photo", tempFile?.name, requestFile)
 
             lifecycleScope.launchWhenCreated {
+                pbLoading.visibility = View.VISIBLE
                 try {
-
                     val response = api.postAttendance(time, status, jobdesk, img1)
                     if (response.isSuccessful && response.body() != null) {
                         Toast.makeText(applicationContext, "Presensi Tercatat",
@@ -219,6 +222,7 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                     val exception = e.message.toString()
                     Toast.makeText(this@AttendanceActivity, exception, Toast.LENGTH_SHORT).show()
                 }
+                pbLoading.visibility = View.GONE
             }
         }
     }
