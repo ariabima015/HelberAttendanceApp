@@ -130,8 +130,10 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
                 applicationContext,
                 filesDir.absolutePath
             )
+
             if (targetFolder != null) {
                 tempFile = selectedFile
+
                 Glide.with(this)
                     .load(selectedFile.uri)
                     .apply(RequestOptions().override(350, 350))
@@ -192,7 +194,6 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
             Toast.makeText(this, "Mohon isi report jobdesk dan foto Dokumentasi",
                 Toast.LENGTH_LONG).show()
         }else{
-
             val requestFile: RequestBody = InputStreamRequestBody(null, contentResolver,
                 tempFile?.uri)
             val img1: MultipartBody.Part =
@@ -227,7 +228,9 @@ class GoHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelec
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_masuk -> {
+                val intent = Intent(this@GoHomeActivity, AttendanceActivity::class.java)
                 finish()
+                startActivity(intent)
             }
             R.id.nav_pulang -> {
             }

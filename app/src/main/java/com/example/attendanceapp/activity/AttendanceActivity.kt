@@ -30,9 +30,6 @@ import com.example.attendanceapp.R
 import com.example.attendanceapp.fragment.UploadFragment
 import com.example.attendanceapp.network.RetrofitInstance
 import com.swein.easypermissionmanager.EasyPermissionManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -68,7 +65,6 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attendance)
-
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
@@ -233,6 +229,7 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.nav_masuk -> {
             }
             R.id.nav_pulang -> {
+                finish()
                 val intent = Intent(this@AttendanceActivity, GoHomeActivity::class.java)
                 startActivity(intent)
             }

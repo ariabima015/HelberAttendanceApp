@@ -55,11 +55,12 @@ dependencies {
     implementation 'com.github.florent37:runtime-permission-kotlin:1.1.2'
 
     implementation "com.anggrayudi:storage:1.1.0"
-
-    //implementation 'com.budiyev.android:code-scanner:2.1.0'
-
+    
     // QR Code Scanner
     implementation('com.journeyapps:zxing-android-embedded:4.2.0') { transitive = false }
     implementation 'com.google.zxing:core:3.3.0'
+
+    //File compressor
+    implementation 'id.zelory:compressor:3.0.1'
 
 }
