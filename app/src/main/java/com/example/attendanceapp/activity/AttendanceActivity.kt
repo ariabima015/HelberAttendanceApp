@@ -187,7 +187,6 @@ class AttendanceActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             etJobdesk.text.toString())
 
 
-
         if (tempFile == null || etJobdesk.text.toString().isEmpty()){
            Toast.makeText(this, "Mohon isi jobdesk dan bukti foto kehadiran",
                Toast.LENGTH_LONG).show()

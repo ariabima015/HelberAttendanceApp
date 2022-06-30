@@ -49,6 +49,4 @@ class RetrofitInstance {
 
         return retrofit.create(BaseApi::class.java)
     }
-
-
 }
